@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hitung Keliling dan Luas Lingkaran, serta Volume Kubus</title>
+</head>
+<body>
+    <h2>Hitung Keliling dan Luas Lingkaran, serta Volume Kubus</h2>
+
+    <!-- Form untuk menghitung lingkaran -->
+    <h3>Hitung Keliling dan Luas Lingkaran</h3>
+    <form method="post" action="hitung.php">
+        Jari-Jari Lingkaran: <input type="number" id="radius" name="radius" step="any" required ><br>
+        <input type="submit" value="Hitung">
+    </form>
+    <div id="result_lingkaran"></div>
+
+   <!-- Form untuk menghitung volume kubus -->
+<h3>Hitung Volume Kubus</h3>
+<form method="post" action="hitung.php" name="hasil_kubus_form">
+    Panjang Sisi Kubus: <input type="number" id="side_length" name="side_length" step="any" required><br>
+    <input type="submit" value="Hitung" name="hasil_kubus">
+</form>
+<div id="result_kubus"></div>
+
+</body>
+<script>
+    const LuasLingkaran = (r) => {
+        if (r >= 0) {
+            const keliling = 2 * Math.PI * r;
+            const luas = Math.PI * Math.pow(r, 2);
+            document.getElementById('result_lingkaran').innerHTML = `
+                <h3>Hasil Perhitungan Lingkaran:</h3>
+                Jari-Jari Lingkaran: ${r.toFixed(2)}<br>
+                Keliling Lingkaran: ${keliling.toFixed(2)}<br>
+                Luas Lingkaran: ${luas.toFixed(2)}<br>
+            `;
+        } else {
+            document.getElementById('result_lingkaran').innerHTML = "Jari-Jari Lingkaran harus positif.";
+        }
+    }
+
+    // Menangani pengiriman formulir lingkaran
+    const lingkaranForm = document.querySelector("form");
+    lingkaranForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const radius = parseFloat(document.getElementById("radius").value);
+        LuasLingkaran(radius);
+    });
+
+    // Menangani pengiriman formulir kubus
+const kubusForm = document.querySelector("form[name='hasil_kubus_form']");
+kubusForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const sideLength = parseFloat(document.getElementById("side_length").value);
+    HitungVolumeKubus(sideLength);
+});
+
+const HitungVolumeKubus = (sisi) => {
+    if (sisi >= 0) {
+        const volume = Math.pow(sisi, 3);
+        document.getElementById('result_kubus').innerHTML = `
+            <h3>Hasil Perhitungan Kubus:</h3>
+            Panjang Sisi Kubus: ${sisi.toFixed(2)}<br>
+            Volume Kubus: ${volume.toFixed(2)}<br>
+        `;
+    } else {
+        document.getElementById('result_kubus').innerHTML = "Panjang Sisi Kubus harus positif.";
+    }
+}
+
+</script>
+</html>
